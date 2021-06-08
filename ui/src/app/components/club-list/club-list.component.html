@@ -1,0 +1,56 @@
+  <h2>Club list</h2>
+
+  <div class="sort-buttons">
+    <div class="button-box">
+      <button class="sort-button" (click)="sortListByPoints()">Sort By Points (Desc. order)</button>
+    </div>
+    <div class="button-box">
+    <button class="sort-button" (click)="sortListByGoalsScored()">Sort By Goals Scored (Desc. order)</button>
+  </div>
+    <div class="button-box">
+    <button class="sort-button" (click)="sortListByWins()">Sort By Wins (Desc. order)</button>  
+  </div>
+  </div>
+  
+  <div class="club-table">
+    <div class="table-header">
+      <div class="col string-col">Club Name <div class="tool-tip">Club Name</div></div>
+
+      <div class="col num-col">PTS <div class="tool-tip"> Points Scored</div> </div>
+      <div class="col num-col">GS  <div class="tool-tip"> Goals Scored</div>  </div>
+      <div class="col num-col">Won <div class="tool-tip"> Matches Won</div>  </div>
+
+      <div class="col num-col">Lost <div class="tool-tip"> Matches Lost</div> </div>
+      <div class="col num-col">Drawn <div class="tool-tip"> Matches Drawn</div> </div>
+      <div class="col num-col">Played <div class="tool-tip"> Matches Played</div> </div>
+      <div class="col num-col">GA <div class="tool-tip"> Goals Against</div> </div>
+      <div class="col num-col">GD <div class="tool-tip"> Goal Difference</div> </div>
+      <div class="col string-col">Club Location <div class="tool-tip"> Club Location</div> </div>
+      <div class="col string-col">Club Manager <div class="tool-tip"> Club Manager</div> </div>
+      <div class="col string-col">Club Owner <div class="tool-tip"> Club Owner</div> </div>
+    </div>
+    <div class="table-body">
+      <div class="content-body" *ngFor="let club of clubs; let i = index">
+        <div class="content string-content"><div class="name-col content-col"> {{ club.clubName }} </div></div>      
+
+        <div class="content num-content"><div class="points-col content-col"> {{ club.noOfPointScored }} </div></div>      
+        <div class="content num-content"><div class="gs-col content-col"> {{ club.noOfGoalsScored }} </div></div>      
+        <div class="content num-content"><div class="wins-col content-col"> {{ club.noOfMatchesWon }}  </div></div>
+       
+        <div class="content num-content"><div class="other-col content-col">{{ club.noOfLosses }}  </div></div>      
+        <div class="content num-content"><div class="other-col content-col">{{ club.noOfDraws }}  </div></div>      
+        <div class="content num-content"><div class="other-col content-col">{{ club.noOfMatchesPlayed }}  </div></div>      
+        <div class="content num-content"><div class="other-col content-col">{{ club.noOfGoalsAgainst }}  </div></div>      
+        <div class="content num-content"><div class="other-col content-col">{{ club.goalDifference }}  </div></div>      
+
+        <div class="content string-content"><div class="long-col content-col">{{ club.clubLocation }}  </div></div>      
+        <div class="content string-content"><div class="long-col content-col">{{ club.clubManger }}  </div></div>      
+        <div class="content string-content"><div class="long-col content-col">{{ club.clubOwner }}  </div></div>      
+      </div>
+    </div>
+  </div>
+  <div class="sort-buttons">
+    <div class="button-box">    
+      <button class="sort-button refresh-button" (click)="refreshList()">Refresh club list</button>
+    </div>  
+  </div>  

@@ -1,0 +1,33 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+# Club Routes
+
+# get all clubs
+GET    /api/clubs                      controllers.FootballClubController.listFootballClubs()
+# update clubs from new match
+
++nocsrf
+PUT    /api/clubs                      controllers.FootballClubController.update(request: Request)
+# Match Routes
+
+# get all matches
+GET    /api/matches                    controllers.FootballMatchController.listFootballMatches(request: Request)
+## create new match
+
++nocsrf
+POST   /api/matches                    controllers.FootballMatchController.create(request: Request)
+
++nocsrf
+POST   /api/clubs                      controllers.FootballClubController.create(request: Request)
+
+
+
+# Serve index page from public directory
+GET     /                           controllers.FrontendController.index()
+
+
+# Serve static assets under public directory
+GET     /*file                      controllers.FrontendController.assetOrDefault(file)
+
+

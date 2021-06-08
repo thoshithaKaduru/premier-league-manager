@@ -1,0 +1,65 @@
+<h2>Generate Match</h2>
+
+<div *ngIf="matchGenerated">    
+    <div *ngIf="!isDraw">
+      <h4>Match Generated...</h4>
+      <h3>Winner is {{ winnerName }} </h3>       
+    </div>
+    <div *ngIf="isDraw">
+      <h4>Match Generated...</h4>
+      <h3>Match Drawn Between {{ homeTeamClub.clubName }} and {{ awayTeamClub.clubName }} </h3>      
+    </div>
+
+
+    <div class="results-table">
+      <div class="table-header">
+        <div class="col main-col"></div>
+        <div class="col other-col">Home Team</div>
+        <div class="col empty-col">VS</div>
+        <div class="col other-col">Away Team</div>        
+      </div>
+      <div class="table-body">
+        <!-- row 1 -->
+        <div class="content-body">
+          <div class="content main-content"><div class="main-col">Club Name</div></div>
+          <div class="content other-content"><div class="other-col">{{ homeTeamClub.clubName }}</div></div>
+          <div class="content empty-content"><div class="empty-col"></div></div>
+          <div class="content other-content"><div class="other-col">{{ awayTeamClub.clubName }}</div></div>
+        </div>
+        <!-- row 2 -->
+        <div class="content-body">
+          <div class="content main-content"><div class="main-col">Club ID</div></div>
+          <div class="content other-content"><div class="other-col">{{ homeTeamClub.clubId }}</div></div>
+          <div class="content empty-content"><div class="empty-col"></div></div>
+          <div class="content other-content"><div class="other-col">{{ awayTeamClub.clubId }}</div></div>
+        </div>
+        <!-- row 3 -->
+        <div class="content-body">
+          <div class="content main-content"><div class="main-col">Goals Scored</div></div>
+          <div class="content other-content"><div class="other-col">{{ match.homeTeamScore }}</div></div>
+          <div class="content empty-content"><div class="empty-col"></div></div>
+          <div class="content other-content"><div class="other-col">{{ match.awayTeamScore }}</div></div>
+        </div>
+        <!-- row 4 -->
+        <div class="content-body">
+          <div class="content main-content"><div class="main-col">Match Date</div></div>
+          <div class="content date-content"><div class="other-col">Match played on <strong>{{ match.matchDate }}</strong></div></div>          
+        </div>        
+      </div>
+    </div>   
+      <div class="generate-match-buttons premier-league-button-box">
+        <button class="generate-button" routerLink="/clubs">
+          View Premier League Table
+        </button>
+      </div>      
+</div>
+<!-- before generating -->
+<div *ngIf="!matchGenerated">     
+  <div class="generate-match-buttons">
+    <button class="generate-button" (click)="generateNewMatch()">Generate Match</button>
+  </div>   
+</div>
+
+
+
+

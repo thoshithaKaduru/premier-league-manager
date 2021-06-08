@@ -1,0 +1,55 @@
+<h2>Matches List</h2>
+<div class="">
+  <div class="search-box">
+    <div class="search-bar-box"> 
+      <input 
+      class="search-bar"
+      type="text"    
+      placeholder="Search Matches By Date"
+      [(ngModel)]="date"
+    />
+    </div>
+  </div>
+  <div >
+    <div class="search-buttons" >
+      <div class="button-box">
+        <button    
+            class="search-button"  
+            type="button"
+            (click)="searchDate()"
+          >
+            Search
+        </button>
+      </div>
+      <div class="button-box">        
+          <button      
+            class="remove-search-button"
+            type="button"
+            (click)="retrieveMatches()"
+          >
+            Remove Filter/ Refresh
+        </button>
+      </div>      
+    </div>
+  </div>
+
+  <div class="match-table">
+    <div class="table-header">
+      <div class="col">match date</div>
+      <div class="col">home team Id</div>
+      <div class="col">away team ID</div>
+      <div class="col">home team score</div>
+      <div class="col">away team score</div>      
+    </div>
+    <div class="table-body">
+      <div class="content-body" *ngFor="let match of matches; let i = index">
+        <div class="content"><div class="main-col">{{ match.matchDate }}</div> </div>
+        <div class="content"><div class="other-col">{{ match.homeTeamId }}</div> </div>
+        <div class="content"><div class="other-col">{{ match.awayTeamId }}</div> </div>
+        <div class="content"><div class="other-col">{{ match.homeTeamScore }}</div>  </div>
+        <div class="content"><div class="other-col">{{ match.awayTeamScore }}</div> </div>
+      </div>      
+    </div>
+  </div>
+  
+  

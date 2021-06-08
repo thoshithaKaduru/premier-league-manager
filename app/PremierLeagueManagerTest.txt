@@ -1,0 +1,147 @@
+import models.FootballClub;
+import models.FootballMatch;
+
+import org.junit.*;
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
+
+public class PremierLeagueManagerTest {
+    private final static PremierLeagueManager premierLeagueManager = PremierLeagueManager.getInstance();
+
+    public PremierLeagueManagerTest() {
+    }
+
+    @BeforeClass
+    public static void beforeAll() {
+        System.out.println("\n\n\n ~ Please delete the saveClubs.ser and saveMatch.ser files before running tests ~\n\n");
+    }
+    @Before
+    public void setUp() {}
+    @After
+    public void tearDown() {}
+
+    @Test
+    public void premierLeagueTests() {
+        testAddFootballClub();
+        testRelegateFootballClub();
+        testDisplayClubStats();
+        testDisplayLeagueTable();
+        testAddFootballMatchAndClubDetailUpdate();
+        getAllClubs();
+    }
+
+    public void testAddFootballClub() {
+        System.out.println("testAddFootballClub");
+
+        FootballClub footballClub1 = new FootballClub("Arsenal", "location1", "manager1", "owner1");
+        FootballClub footballClub2 = new FootballClub("Liverpool", "location2", "manager2", "owner2");
+        premierLeagueManager.addFootballClub(footballClub1);
+        premierLeagueManager.addFootballClub(footballClub2);
+        assertEquals( "first club will have an id of 1", 1, premierLeagueManager.getFootballClubId(footballClub1.getClubName()));
+        assertEquals( "second club will have an id of 2", 2, premierLeagueManager.getFootballClubId(footballClub2.getClubName()));
+
+        // disposing added clubs
+        premierLeagueManager.relegateFootballClub(footballClub1.getClubId());
+        premierLeagueManager.relegateFootballClub(footballClub2.getClubId());
+    }
+
+
+    public void testRelegateFootballClub() {
+        FootballClub footballClub1 = new FootballClub("Barcelona", "location1", "manager1", "owner1");
+        FootballClub footballClub2 = new FootballClub("Argentina", "location2", "manager2", "owner2");
+        premierLeagueManager.addFootballClub(footballClub1);
+        premierLeagueManager.addFootballClub(footballClub2);
+        premierLeagueManager.relegateFootballClub(footballClub1.getClubId());
+        assertEquals("deleted club will get -1", -1,premierLeagueManager.getFootballClubId(footballClub1.getClubName()));
+        assertEquals("existing club will get club id", 2,premierLeagueManager.getFootballClubId(footballClub2.getClubName()));
+
+        // disposing added clubs
+        premierLeagueManager.relegateFootballClub(footballClub2.getClubId());
+    }
+
+
+    public void testDisplayClubStats() {
+        FootballClub footballClub1 = new FootballClub("Barcelona", "location1", "manager1", "owner1");
+        FootballClub footballClub2 = new FootballClub("Argentina", "location2", "manager2", "owner2");
+        premierLeagueManager.addFootballClub(footballClub1);
+        premierLeagueManager.addFootballClub(footballClub2);
+        assertEquals("True returned if display called on existing club name", true, premierLeagueManager.displayClubStats(footballClub1.getClubName()));
+        assertEquals("False returned if display called on non-existing club name", false, premierLeagueManager.displayClubStats("Dortmund"));
+
+        // disposing added clubs
+        premierLeagueManager.relegateFootballClub(footballClub1.getClubId());
+        premierLeagueManager.relegateFootballClub(footballClub2.getClubId());
+    }
+
+
+    public void testDisplayLeagueTable() {
+        assertEquals("false returned if league table is displayed with not clubs", false, premierLeagueManager.displayLeagueTable());
+
+        FootballClub footballClub1 = new FootballClub("Barcelona", "location1", "manager1", "owner1");
+        FootballClub footballClub2 = new FootballClub("Argentina", "location2", "manager2", "owner2");
+        premierLeagueManager.addFootballClub(footballClub1);
+        premierLeagueManager.addFootballClub(footballClub2);
+
+        assertEquals("true returned when league table is called with clubs added", true, premierLeagueManager.displayLeagueTable());
+
+        // disposing added clubs
+        premierLeagueManager.relegateFootballClub(footballClub1.getClubId());
+        premierLeagueManager.relegateFootballClub(footballClub2.getClubId());
+
+    }
+
+
+    public void testAddFootballMatchAndClubDetailUpdate() {
+        FootballClub footballClub1 = new FootballClub("Barcelona", "location1", "manager1", "owner1");
+        FootballClub footballClub2 = new FootballClub("Argentina", "location2", "manager2", "owner2");
+        premierLeagueManager.addFootballClub(footballClub1);
+        premierLeagueManager.addFootballClub(footballClub2);
+
+        FootballMatch footballMatch1 = new FootballMatch(1, 2, 10, 5, "21-05-2020");
+        FootballMatch footballMatch2 = new FootballMatch(1, 2, 10, 10, "12-12-2021");
+
+        // match 1
+        premierLeagueManager.addFootballMatch(footballMatch1);
+        // winner Barcelona
+        assertEquals("points increase by 3 for winner", 3,premierLeagueManager.getFootballClub(footballClub1.getClubId()).getNoOfPointScored());
+        assertEquals("matches played should increase by 1", 1, premierLeagueManager.getFootballClub(footballClub1.getClubId()).getNoOfMatchesPlayed() );
+        assertEquals("matches won increase by 1 for club 1", 1, premierLeagueManager.getFootballClub(footballClub1.getClubId()).getNoOfMatchesWon());
+        assertEquals("goals against will be opponents goals", 5, premierLeagueManager.getFootballClub(footballClub1.getClubId()).getNoOfGoalsAgainst());
+
+        // lost team Argentina
+        assertEquals("points do not increase for lost team", 0,premierLeagueManager.getFootballClub(footballClub2.getClubId()).getNoOfPointScored());
+        assertEquals("losses increase by 1 for lost team", 1, premierLeagueManager.getFootballClub(footballClub2.getClubId()).getNoOfLosses());
+
+        // match 2 - Draw between Argentina and Barcelona
+        premierLeagueManager.addFootballMatch(footballMatch2);
+        assertEquals("draws should be one for both", 1, premierLeagueManager.getFootballClub(footballClub1.getClubId()).getNoOfDraws());
+        assertEquals("draws should be one for both", 1, premierLeagueManager.getFootballClub(footballClub2.getClubId()).getNoOfDraws());
+
+        // disposing added clubs
+        premierLeagueManager.relegateFootballClub(footballClub1.getClubId());
+        premierLeagueManager.relegateFootballClub(footballClub2.getClubId());
+    }
+
+
+    public void getAllClubs() {
+        Map<Integer, FootballClub> TestFootballClubsMap = new HashMap<>();
+        Set<FootballClub> TestFootballClubsReturn1 = new HashSet<>(TestFootballClubsMap.values());
+
+        FootballClub footballClub1 = new FootballClub("Liverpool", "location1", "manager1", "owner1");
+        FootballClub footballClub2 = new FootballClub("Argentina", "location2", "manager2", "owner2");
+        assertEquals("no clubs returns an empty HashSet",TestFootballClubsReturn1, premierLeagueManager.getAllFootballClubs());
+        premierLeagueManager.addFootballClub(footballClub1);
+        premierLeagueManager.addFootballClub(footballClub2);
+        TestFootballClubsMap.put(footballClub1.getClubId(), footballClub1);
+        TestFootballClubsMap.put(footballClub2.getClubId(), footballClub2);
+
+        Set<FootballClub> TestFootballClubsReturn2 = new HashSet<>(TestFootballClubsMap.values());
+        assertEquals("after adding clubs a Hashset of clubs is returned",TestFootballClubsReturn2, premierLeagueManager.getAllFootballClubs());
+    }
+}

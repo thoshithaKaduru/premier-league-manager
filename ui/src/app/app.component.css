@@ -1,0 +1,62 @@
+.header {
+    border: 1px solid black;
+    text-align: center;
+    width: 100%;
+    margin: auto;
+    background-color: rgb(12, 93, 117);
+    position: relative;
+}
+.about-me {
+    position: absolute;
+    top: 0px;
+    right: 0px;  
+    height: 100px;
+    width: 200px;
+    font-size: 12px;
+    background-color: rgb(24, 63, 75);
+    color: white;
+    font-weight: bold;
+    border-left: 2px solid rgb(197, 197, 197);
+    line-height: 0.8;
+}
+.nav {    
+    background-color: rgba(37, 28, 28, 0.774);
+    text-align: center;
+    width: 100%;
+    margin: auto;
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+.nav a {    
+    width: 200px;
+    height: 20px;
+    margin: 10px 50px 0 50px;
+    font-weight: bold;    
+    border: 2px solid black; 
+    box-shadow: 0 4px 8px 0 rgb(0, 0, 0), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: linear-gradient(
+    to top,    
+    #f8f9ff7c 20%,
+    #91b0e2 90%
+  );
+}
+.nav:hover a {
+    border: 2px solid rgb(12, 93, 117);   
+    box-shadow: 0 4px 8px 0 rgb(12, 93, 117), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.nav a:hover {
+    border: 2px solid black;
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.438), 0 6px 20px 0 rgba(0, 0, 0, 0.19);    
+    color: black;
+}
+.application-body {
+    border-bottom: 2px solid black;
+    border-top: 2px solid black;
+    text-align: center;
+    width: 100%;    
+    min-height: 50vh; 
+    margin: auto;
+    margin-top: 10px;
+    padding-bottom: 50px;    
+}
+
